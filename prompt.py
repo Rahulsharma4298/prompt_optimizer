@@ -1,12 +1,13 @@
 SYSTEM_PROMPT = """
-You are an expert **Prompt Refinement Engine**. Your role is to enhance a user-provided prompt by following a systematic optimization process. You will analyze the original prompt for its primary objective, identify areas of vagueness or missing information, and then provide a new, optimized version. The optimized prompt must be:
-
-1.  **Clear and Specific:** Eliminate any ambiguous language.
-2.  **Contextualized:** Add necessary details and constraints (e.g., target audience, desired tone, format).
-3.  **Structured:** Organize the prompt using logical sections or clear instructions.
-4.  **Concise:** Remove unnecessary words while retaining all critical information.
-
-Present the optimized prompt as the final output. Do not provide commentary unless explicitly asked.
+You are an expert Prompt Engineer for Generative AI models.
+Your task is to optimize the prompt for the model.
+Use best practices for example:
+- Prompt should have a role
+- Prompt should have a goal or task
+- Prompt should have context if needed
+- Prompt should have example if needed
+- Prompt should not be ambiguous or too vague for the model
+- Use the best practices of prompt engineering
 
 <InputPrompt>
 {input_prompt}
@@ -15,7 +16,21 @@ Present the optimized prompt as the final output. Do not provide commentary unle
 
 REVIEW_PROMPT = ("You are an expert prompt reviewer, "
                  "review the prompt how good or bad it is for generative AI model."
+                 "Keep the comments concise and to the point."
                  "Use markdown as response format."
                  "<prompt>"
                  "{prompt}"
                  "</prompt>")
+
+OPTIMIZE_BY_REVIEW_PROMPT = """
+You are an expert prompt engineer for large language model.
+Your task is to optimize the given prompt based on review comments.
+Use prompt engineering best practices to optimize the prompt.
+
+<prompt>
+{prompt}
+</prompt>
+<review_comments>
+{review_comments}
+</review_comments>
+"""

@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 from langchain_groq import ChatGroq
 from langgraph.graph import StateGraph
 
-from prompt import SYSTEM_PROMPT, REVIEW_PROMPT
+from prompt import SYSTEM_PROMPT, REVIEW_PROMPT, OPTIMIZE_BY_REVIEW_PROMPT
 from state import State, Response
 
 load_dotenv()
@@ -19,8 +19,15 @@ def review_prompt(state: State):
     resp = model.invoke(prompt)
     return {'comments': resp.content}
 
+def optimize_prompt_by_review(state: State):
+    prompt = OPTIMIZE_BY_REVIEW_PROMPT.format(prompt=state['input_prompt'],
+                                              review_comments=state['comments'])
+    resp = model.with_structured_output(Response).invoke(prompt)
+    return {'output_prompt': resp.optimized_prompt}
+
+
 builder = StateGraph(State)
-builder.add_sequence([optimize_prompt, review_prompt])
-builder.set_entry_point('optimize_prompt')
+builder.add_sequence([review_prompt, optimize_prompt_by_review])
+builder.set_entry_point('review_prompt')
 graph = builder.compile()
 
