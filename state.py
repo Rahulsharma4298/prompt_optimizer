@@ -6,6 +6,7 @@ class State(TypedDict):
     input_prompt: str
     output_prompt: str
     comments: str
+    iterations: int
 
 class Response(BaseModel):
     optimized_prompt: str

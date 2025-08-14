@@ -5,7 +5,7 @@ Use best practices for example:
 - Prompt should have a role
 - Prompt should have a goal or task
 - Prompt should have context if needed
-- Prompt should have example if needed
+- Prompt can have example if needed
 - Prompt should not be ambiguous or too vague for the model
 - Use the best practices of prompt engineering
 
